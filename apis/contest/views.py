@@ -69,6 +69,12 @@ class JoinCompetitionView(views.APIView):
 
     def post(self, request, competition_id):
         user = self.request.user
+        if user.is_staff or user.is_superuser:
+            return response.Response({
+                "status": False,
+                "message": "You are not allowed to join this contest.",
+            }, status=status.HTTP_403_FORBIDDEN)
+
         with transaction.atomic():
             try:
                 data = self.request.data

@@ -18,7 +18,7 @@ class User(AbstractUser):
         ordering = ("-date_joined",)
 
     def __str__(self):
-        return self.get_full_name()
+        return self.phone_number
 
 
 class UsersVerification(models.Model):
