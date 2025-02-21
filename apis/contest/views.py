@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.sites.shortcuts import get_current_site
 from django.db import transaction
 from django.db.models import F, Value, CharField
@@ -99,7 +101,7 @@ class JoinCompetitionView(views.APIView):
                 })
             try:
                 competition = Competition.objects.get(id=competition_id)
-                if competition.end_date < timezone.now():
+                if competition.end_date < datetime.datetime.now().date():
                     return response.Response({
                         "status": False,
                         "message": f"Competition: {competition_id}, has expired",
