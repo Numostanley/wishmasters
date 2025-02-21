@@ -11,6 +11,7 @@ settings.py
 db.sqlite3
 db.sqlite3-journal
 media
+static
 *migrations
 *local.py
 db.json
