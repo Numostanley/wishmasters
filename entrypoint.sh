@@ -2,7 +2,7 @@
 set -e
 
 # Wait for PostgreSQL to be ready
-./wait-for-it.sh db:5432 -- python manage.py makemigrations
+./wait-for-it.sh db:5432 -- python manage.py makemigrations clients users contest
 
 python manage.py migrate
 
