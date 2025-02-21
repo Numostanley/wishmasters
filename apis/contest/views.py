@@ -201,6 +201,8 @@ class CompetitionsAPIView(views.APIView, StandardResultsSetPagination):
             competition = Competition.objects.get(id=competition_id)
             data = CompetitionSerializer(competition).data
 
+            base_url = f"{http_scheme}://{domain}"
+
             if data["image"]:
                 data["image"] = base_url + data["image"]
 
