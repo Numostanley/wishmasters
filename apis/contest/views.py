@@ -74,7 +74,7 @@ class JoinCompetitionView(views.APIView):
         if user.is_staff or user.is_superuser:
             return response.Response({
                 "status": False,
-                "message": "You are not allowed to join this contest.",
+                "message": "You are not allowed to join this contest as an admin.",
             }, status=status.HTTP_403_FORBIDDEN)
 
         with transaction.atomic():
@@ -100,6 +100,12 @@ class JoinCompetitionView(views.APIView):
                     "message": "Please provide paid entry fee for this competition",
                 })
             try:
+                if PlayerEntry.objects.filter(competition_id=competition_id, user=user).exists():
+                    return response.Response({
+                        "status": False,
+                        "message": f"You have already joined this competition {competition_id}",
+                    })
+
                 competition = Competition.objects.get(id=competition_id)
                 if competition.end_date < datetime.datetime.now().date():
                     return response.Response({
